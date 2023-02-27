@@ -5,12 +5,14 @@ Another World reimplementation written in HTML5 / JavaScript
 ## Play Online
 
 - Browser: https://anotherjs.oklemenz.de
-- Keyboard / Mouse Controls
-  - Cursor keys: Movement
-      - Left / Right key: Move Left/Right
-      - Up key: Jump
-      - Down key: Crouch
-      - SPACE: Action (Shoot, Kick, Run) 
+- Keyboard
+  - `Cursor keys`: Movement
+    - `Left / Right key`: Move Left/Right
+    - `Up key`: Jump
+    - `Down key`: Crouch
+  - `SPACE`: Action (Shoot, Kick, Run)
+- Mouse
+  - See Touch Controls for Mobile
 
 ## Play Mobile
 
