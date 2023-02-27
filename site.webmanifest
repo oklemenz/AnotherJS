@@ -1,0 +1,12 @@
+{
+    "name": "Another World",
+    "short_name": "Another World",
+    "description": "An HTML5 port of Another World",
+    "icons": [{
+        "src": "img/touch-icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
+    "display": "fullscreen",
+    "orientation": "landscape"
+}

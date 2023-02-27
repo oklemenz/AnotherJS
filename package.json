@@ -1,0 +1,23 @@
+{
+  "name": "another-js",
+  "version": "1.0.0",
+  "description": "Another World (JavaScript)",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "http-server --cors=*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oklemenz/AnotherJS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oklemenz/AnotherJS/issues"
+  },
+  "homepage": "https://github.com/oklemenz/AnotherJS#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
