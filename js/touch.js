@@ -1,6 +1,6 @@
 (function () {
   // Set up the canvas
-  var canvas = document.getElementById("canvas");
+  var canvas = document.getElementById("screen");
   var ctx = canvas.getContext("2d");
   ctx.strokeStyle = "#ff0000";
   ctx.lineWith = 2;

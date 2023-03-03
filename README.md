@@ -6,11 +6,12 @@ Another World reimplementation written in HTML5 / JavaScript
 
 - Browser: https://anotherjs.oklemenz.de
 - Keyboard
-  - `Cursor keys`: Movement
-    - `Left / Right key`: Move Left/Right
-    - `Up key`: Jump
-    - `Down key`: Crouch
-  - `SPACE`: Action (Shoot, Kick, Run)
+  - `Cursor keys`: Movement (Walk / Swim)
+    - `Left / Right key`: Move Left / Right
+    - `Up key`: Move Up / Jump
+    - `Down key`: Move Down / Crouch
+  - `SPACE`: Action (Run, Shoot, Kick)
+  - `SHIFT`: Jump
 - Mouse
   - See Touch Controls for Mobile
 
@@ -36,7 +37,26 @@ Another World reimplementation written in HTML5 / JavaScript
   - `npm start`
 - Browser: `localhost:8080`
 
+## Options
+
+Url parameters are leveraged to save game state automatically (shortcut in brackets)
+
+- `part (p)`: Current part (0-8, default: 1)
+
+### Parts:
+
+- 0: [Copy Protection](https://anotherjs.oklemenz.de?part=0)
+- 1: [Introduction](https://anotherjs.oklemenz.de?part=1)
+- 2: [Water](https://anotherjs.oklemenz.de?part=2)
+- 3: [Jail](https://anotherjs.oklemenz.de?part=3)
+- 4: [Caves](https://anotherjs.oklemenz.de?part=4)
+- 5: [Arena](https://anotherjs.oklemenz.de?part=5)
+- 6: [Luxe](https://anotherjs.oklemenz.de?part=6)
+- 7: [Final](https://anotherjs.oklemenz.de?part=7)
+- 8: [Password screen](https://anotherjs.oklemenz.de?part=8)
+
 ## Credits
 
 - https://github.com/cyxx
 - https://github.com/warpdesign
+- https://github.com/Hypercubed

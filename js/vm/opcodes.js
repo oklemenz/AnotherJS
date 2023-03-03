@@ -1,0 +1,45 @@
+export const OP_CODE = {
+  /* 0x00 */
+  movConst: 0x00,
+  mov: 0x01,
+  add: 0x02,
+  addConst: 0x03,
+
+  /* 0x04 */
+  call: 0x04,
+  ret: 0x05,
+  pauseThread: 0x06,
+  jmp: 0x07,
+
+  /* 0x08 */
+  setSetVect: 0x08,
+  jnz: 0x09,
+  condJmp: 0x0A,
+  setPalette: 0x0B,
+
+  /* 0x0C */
+  resetThread: 0x0C,
+  selectVideoPage: 0x0D,
+  fillVideoPage: 0x0E,
+  copyVideoPage: 0x0F,
+
+  /* 0x10 */
+  blitFramebuffer: 0x10,
+  killThread: 0x11,
+  drawString: 0x12,
+  sub: 0x13,
+
+  /* 0x14 */
+  and: 0x14,
+  or: 0x15,
+  shl: 0x16,
+  shr: 0x17,
+
+  /* 0x18 */
+  playSound: 0x18,
+  updateMemList: 0x19,
+  playMusic: 0x1A,
+}
+
+export const DRAW_POLY_BACKGROUND = 0x80;
+export const DRAW_POLY_SPRITE = 0x40;
