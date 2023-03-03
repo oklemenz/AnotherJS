@@ -43,7 +43,7 @@ Url parameters are leveraged to save game state automatically (shortcut in brack
 
 - `part (p)`: Current part (0-8, default: 1)
 
-### Parts:
+### Parts
 
 - 0: [Copy Protection](https://anotherjs.oklemenz.de?part=0)
 - 1: [Introduction](https://anotherjs.oklemenz.de?part=1)
