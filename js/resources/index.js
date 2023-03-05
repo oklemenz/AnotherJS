@@ -128,20 +128,19 @@ try {
   };
 
   restartPositions = [
-    { name: 'In the Lake (LDKD)', code: 'LDKD', part: GAME_PART.WATER, offset: 0 },
-    { name: 'In The Cage (HTDC)', code: 'HTDC', part: GAME_PART.JAIL, offset: 0 },
-    { name: 'In The Sewers (CLLD)', code: 'CLLD', part: GAME_PART.CITY, offset: 0 },
-    // { name: 'First Recharger', code: '', part: GAME_PART.CITY, offset: 31 },
-    { name: 'In the Caves (XDDJ)', code: 'XDDJ', part: GAME_PART.CITY, offset: 33 },
-    // { name: 'T-Shaped Rock', code: '', part: GAME_PART.CITY, offset: 37 },
-    // { name: 'Buddy Crawl', code: '', part: GAME_PART.CITY, offset: 39 },
-    { name: 'By the water', code: '', part: GAME_PART.CITY, offset: 41 },
-    // { name: 'After the water', code: '', part: GAME_PART.CITY, offset: 49 },
-    // { name: 'Blast run (CKJL)', code: 'CKJL', part: GAME_PART.ARENA, offset: 0 },
-    { name: 'Tower Baths (LFCK)', code: 'LFCK', part: GAME_PART.BATHS, offset: 0 },
-    { name: 'Temple Entrance (TFBB)', code: 'TFBB', part: GAME_PART.BATHS, offset: 64 },
-    // { name: 'Escape', code: '', part: GAME_PART.BATHS, offset: 66 },
-    // { name: 'Final', code: '', part: GAME_PART.FINAL, offset: 0 }
+    { name: 'Water (LDKD)', code: 'LDKD', part: GAME_PART.WATER, offset: 0 },
+    { name: 'Jail (HTDC)', code: 'HTDC', part: GAME_PART.JAIL, offset: 0 },
+    { name: 'Sewers (CLLD)', code: 'CLLD', part: GAME_PART.CITY, offset: 30 },
+    { name: 'Recharger (LBKG)', code: 'LBKG', part: GAME_PART.CITY, offset: 31 },
+    { name: 'Caves (XDDJ)', code: 'XDDJ', part: GAME_PART.CITY, offset: 33 },
+    { name: 'Basin (FXLC)', code: 'FXLC', part: GAME_PART.CITY, offset: 35 },
+    { name: 'T-Rock (KRFK)', code: 'KRFK', part: GAME_PART.CITY, offset: 37 },
+    { name: 'Columns (KLFB)', code: 'KLFB', part: GAME_PART.CITY, offset: 39 },
+    { name: 'Dive (TTCT)', code: 'TTCT', part: GAME_PART.CITY, offset: 41 },
+    { name: 'Exit (BRTD)', code: 'BRTD)', part: GAME_PART.CITY, offset: 49 },
+    { name: 'Arena (CKJL)', code: 'CKJL', part: GAME_PART.ARENA, offset: 0 },
+    { name: 'Baths (LFCK)', code: 'LFCK', part: GAME_PART.BATHS, offset: 0 },
+    { name: 'Final', code: '', part: GAME_PART.FINAL, offset: 0 }
   ];
 
   DATA = {

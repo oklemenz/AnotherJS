@@ -143,7 +143,7 @@ function nr(inp, len, out) {
     inOffset++;
     out[outOffset] = sL + prevL;
     if (out[outOffset] > 128 || out[outOffset] < -127) {
-      throw new Error("expected error");
+      throw new Error("unexpected error");
     }
     outOffset++;
     prevL = sL;
