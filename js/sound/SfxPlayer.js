@@ -6,17 +6,16 @@ const CreateSfxMod = () => ({
   data: null,
   samples: new Array(15).fill(null).map(() => ({
     data: null,
-    volume: 0,
-  })),
+    volume: 0
+  }))
 });
 
-const createSfx = () =>
-  ({
-    sample: null,
-    volume: 0,
-    loops: 0,
-    loop: 0,
-  });
+const createSfx = () => ({
+  sample: null,
+  volume: 0,
+  loops: 0,
+  loop: 0
+});
 
 function read_be_uint16(buf, offset) {
   return (buf[offset] << 8) | buf[offset + 1];
@@ -60,32 +59,22 @@ export class SfxPlayer {
       await this._audioContext.audioWorklet.addModule("js/processors.js");
 
       // console.log('Creating worklet raw')
-      this._sfxRawWorklet = new AudioWorkletNode(
-        this._audioContext,
-        "sfxraw-processor",
-        {
-          outputChannelCount: [1],
-          numberOfInputs: 0,
-          numberOfOutputs: 1,
-        }
-      );
+      this._sfxRawWorklet = new AudioWorkletNode(this._audioContext, "sfxraw-processor", {
+        outputChannelCount: [1],
+        numberOfInputs: 0,
+        numberOfOutputs: 1
+      });
 
-      this._sfxRawWorklet.port.onmessage =
-        this.onSFXRawProcessorMessage.bind(this);
+      this._sfxRawWorklet.port.onmessage = this.onSFXRawProcessorMessage.bind(this);
       this._sfxRawWorklet.port.start();
 
       // console.log('Creating worklet sfxplayer')
-      this._sfxPlayerWorklet = new AudioWorkletNode(
-        this._audioContext,
-        "sfxplayer-processor",
-        {
-          outputChannelCount: [2],
-          numberOfInputs: 0,
-          numberOfOutputs: 1,
-        }
-      );
-      this._sfxPlayerWorklet.port.onmessage =
-        this.onSFXPlayerProcessorMessage.bind(this);
+      this._sfxPlayerWorklet = new AudioWorkletNode(this._audioContext, "sfxplayer-processor", {
+        outputChannelCount: [2],
+        numberOfInputs: 0,
+        numberOfOutputs: 1
+      });
+      this._sfxPlayerWorklet.port.onmessage = this.onSFXPlayerProcessorMessage.bind(this);
       this._sfxPlayerWorklet.port.start();
 
       this._sfxRawWorklet.connect(this._audioContext.destination);
@@ -93,12 +82,12 @@ export class SfxPlayer {
 
       this.postMessageToSFXPlayerProcessor({
         message: "init",
-        mixingRate: this._rate,
+        mixingRate: this._rate
       });
 
       this.postMessageToSFXRawProcessor({
         message: "init",
-        mixingRate: this._rate,
+        mixingRate: this._rate
       });
     } catch (e) {
       console.error(`Error during initAudio: ${e} ${e.stack}`);
@@ -120,7 +109,7 @@ export class SfxPlayer {
     if (shouldSend) {
       this.postMessageToSFXPlayerProcessor({
         message: "setEventsDelay",
-        delay: this._delay,
+        delay: this._delay
       });
     }
   }
@@ -142,9 +131,7 @@ export class SfxPlayer {
     if (this._sfxPlayerWorklet) {
       this._sfxPlayerWorklet.port.postMessage(message);
     } else {
-      console.warn(
-        "Cannot send message to sfx player processor: not available"
-      );
+      console.warn("Cannot send message to sfx player processor: not available");
     }
   }
 
@@ -152,9 +139,7 @@ export class SfxPlayer {
     if (this._sfxRawWorklet) {
       this._sfxRawWorklet.port.postMessage(message);
     } else {
-      console.warn(
-        "Cannot send message to raw player processor: not available"
-      );
+      console.warn("Cannot send message to raw player processor: not available");
     }
   }
 
@@ -181,10 +166,8 @@ export class SfxPlayer {
       this.postMessageToSFXPlayerProcessor({
         message: "load",
         sfxMod: this._sfxMod,
-        delay: this._delay,
+        delay: this._delay
       });
-    } else {
-      debugger;
     }
   }
 
@@ -211,13 +194,13 @@ export class SfxPlayer {
 
   startMusic() {
     this.postMessageToSFXPlayerProcessor({
-      message: "start",
+      message: "start"
     });
   }
 
   stopMusic() {
     this.postMessageToSFXPlayerProcessor({
-      message: "stop",
+      message: "stop"
     });
   }
 
@@ -225,36 +208,31 @@ export class SfxPlayer {
     this.stopMusic();
     this.postMessageToSFXPlayerProcessor({
       message: "play",
-      mixingRate: this._rate,
+      mixingRate: this._rate
     });
   }
 
   pause() {
     this.postMessageToSFXRawProcessor({
-      message: "pause",
+      message: "pause"
     });
 
     this.postMessageToSFXPlayerProcessor({
-      message: "pause",
+      message: "pause"
     });
   }
 
   resume() {
     this.postMessageToSFXRawProcessor({
-      message: "resume",
+      message: "resume"
     });
 
     this.postMessageToSFXPlayerProcessor({
-      message: "resume",
+      message: "resume"
     });
   }
 
-  playSoundRaw(
-    channel,
-    data,
-    freq,
-    volume
-  ) {
+  playSoundRaw(channel, data, freq, volume) {
     let len = read_be_uint16(data, 0) * 2;
     const loopLen = read_be_uint16(data, 2) * 2;
     if (loopLen !== 0) {
@@ -271,7 +249,7 @@ export class SfxPlayer {
       this.postMessageToSFXRawProcessor({
         message: "play",
         sound: sfx,
-        channel,
+        channel
       });
     }
   }
@@ -279,7 +257,7 @@ export class SfxPlayer {
   stopSoundChannel(channel) {
     this.postMessageToSFXRawProcessor({
       message: "stop",
-      channel,
+      channel
     });
   }
 }

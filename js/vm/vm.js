@@ -1,13 +1,12 @@
 import {
   DATA,
   font,
-  isDemo,
   load,
   GAME_PART,
   partsList,
   strings_en,
   strings_fr,
-  STRINGS_LANGUAGE,
+  STRINGS_LANGUAGE
 } from "../resources/index.js";
 
 import * as screen from "./canvas.js";
@@ -185,7 +184,7 @@ function restart(part, pos = 0) {
       next_state: 0,
       offset: -1,
       next_offset: -1,
-      stack: [],
+      stack: []
     };
   }
 
@@ -214,10 +213,7 @@ function copy_page(src, dst, vscroll) {
   dst = get_page(dst);
   if (src >= 0xfe) {
     src = get_page(src);
-    buffer8.set(
-      buffer8.subarray(src * PAGE_SIZE, (src + 1) * PAGE_SIZE),
-      dst * PAGE_SIZE
-    );
+    buffer8.set(buffer8.subarray(src * PAGE_SIZE, (src + 1) * PAGE_SIZE), dst * PAGE_SIZE);
   } else {
     if ((src & 0x80) == 0) {
       vscroll = 0;
@@ -229,25 +225,16 @@ function copy_page(src, dst, vscroll) {
     const dst_offset = dst * PAGE_SIZE;
     const src_offset = src * PAGE_SIZE;
     if (vscroll == 0) {
-      buffer8.set(
-        buffer8.subarray(src_offset, src_offset + PAGE_SIZE),
-        dst_offset
-      );
+      buffer8.set(buffer8.subarray(src_offset, src_offset + PAGE_SIZE), dst_offset);
     } else {
       //console.log( 'vscroll:' + vscroll );
       vscroll *= SCALE;
       if (vscroll > -SCREEN_W && vscroll < SCREEN_W) {
         const h = vscroll * SCREEN_W;
         if (vscroll < 0) {
-          buffer8.set(
-            buffer8.subarray(src_offset - h, src_offset + PAGE_SIZE),
-            dst_offset
-          );
+          buffer8.set(buffer8.subarray(src_offset - h, src_offset + PAGE_SIZE), dst_offset);
         } else {
-          buffer8.set(
-            buffer8.subarray(src_offset, src_offset + PAGE_SIZE - h),
-            dst_offset + h
-          );
+          buffer8.set(buffer8.subarray(src_offset, src_offset + PAGE_SIZE - h), dst_offset + h);
         }
       }
     }
@@ -270,13 +257,7 @@ function draw_point(page, color, x, y) {
   }
 }
 
-function draw_line(
-  page,
-  color,
-  y,
-  x1,
-  x2
-) {
+function draw_line(page, color, y, x1, x2) {
   if (x1 > x2) {
     const tmp = x1;
     x1 = x2;
@@ -294,10 +275,7 @@ function draw_line(
   const offset = page * PAGE_SIZE + y * SCREEN_W;
   if (color == 0x11) {
     console.assert(page != 0);
-    buffer8.set(
-      buffer8.subarray(y * SCREEN_W + x1, y * SCREEN_W + x2 + 1),
-      offset + x1
-    );
+    buffer8.set(buffer8.subarray(y * SCREEN_W + x1, y * SCREEN_W + x2 + 1), offset + x1);
   } else if (color == 0x10) {
     for (let i = x1; i <= x2; ++i) {
       buffer8[offset + i] |= 8;
@@ -318,12 +296,10 @@ function draw_polygon(page, color, vertices) {
   let count = vertices.length;
   for (count -= 2; count != 0; count -= 2) {
     const h1 = vertices[j].y - vertices[j + 1].y;
-    const step1 =
-      (((vertices[j].x - vertices[j + 1].x) << 16) / (h1 == 0 ? 1 : h1)) >> 0;
+    const step1 = (((vertices[j].x - vertices[j + 1].x) << 16) / (h1 == 0 ? 1 : h1)) >> 0;
     j -= 1;
     const h2 = vertices[i].y - vertices[i - 1].y;
-    const step2 =
-      (((vertices[i].x - vertices[i - 1].x) << 16) / (h2 == 0 ? 1 : h2)) >> 0;
+    const step2 = (((vertices[i].x - vertices[i - 1].x) << 16) / (h2 == 0 ? 1 : h2)) >> 0;
     i += 1;
     f1 = (f1 & 0xffff0000) | 0x7fff;
     f2 = (f2 & 0xffff0000) | 0x8000;
@@ -346,14 +322,7 @@ function draw_polygon(page, color, vertices) {
   }
 }
 
-function fill_polygon(
-  data,
-  offset,
-  color,
-  zoom,
-  x,
-  y
-) {
+function fill_polygon(data, offset, color, zoom, x, y) {
   const w = ((data[offset++] * zoom) / 64) >> 0;
   const h = ((data[offset++] * zoom) / 64) >> 0;
   const x1 = (x * SCALE - (w * SCALE) / 2) >> 0;
@@ -378,13 +347,7 @@ function fill_polygon(
   }
 }
 
-function draw_shape_parts(
-  data,
-  offset,
-  zoom,
-  x,
-  y
-) {
+function draw_shape_parts(data, offset, zoom, x, y) {
   const x0 = (x - (data[offset++] * zoom) / 64) >> 0;
   const y0 = (y - (data[offset++] * zoom) / 64) >> 0;
   const count = data[offset++];
@@ -402,14 +365,7 @@ function draw_shape_parts(
   }
 }
 
-function draw_shape(
-  data,
-  offset,
-  color,
-  zoom,
-  x,
-  y
-) {
+function draw_shape(data, offset, color, zoom, x, y) {
   const code = data[offset++];
   if (code >= 0xc0) {
     if (color & 0x80) {
@@ -431,13 +387,7 @@ function put_pixel(page, x, y, color) {
   }
 }
 
-function draw_char(
-  page,
-  chr,
-  color,
-  x,
-  y
-) {
+function draw_char(page, chr, color, x, y) {
   if (x < 320 / 8 && y < 200 - 8) {
     for (let j = 0; j < 8; ++j) {
       const mask = font[(chr - 32) * 8 + j];
@@ -662,8 +612,7 @@ const vm = {
 
       // The bytecode will set vmVariables[VM_VARIABLE_PAUSE_SLICES] from 1 to 5
       // The virtual machine hence indicate how long the image should be displayed.
-      const timeToSleep =
-        (memory.vmVars[VAR.PAUSE_SLICES] * 1000) / FPS - delay;
+      const timeToSleep = (memory.vmVars[VAR.PAUSE_SLICES] * 1000) / FPS - delay;
 
       if (timeToSleep > 0) {
         const t = timestamp + timeToSleep;
@@ -742,7 +691,7 @@ const vm = {
     const period = read_word();
     const position = read_byte();
     sound.play_music(num, period, position);
-  },
+  }
 };
 
 // PUBLIC API
@@ -752,7 +701,7 @@ export function get_state() {
     vars: memory.vmVars.slice(),
     tasks: JSON.parse(JSON.stringify(memory.vmTasks)),
     buffer8: buffer8.slice(),
-    palette32: palette.palette32.slice(),
+    palette32: palette.palette32.slice()
   };
 }
 
@@ -782,8 +731,7 @@ export function reset() {
   }
   memory.vmVars[VAR.HACK_VAR_E4] = 20;
 
-  next_part =
-    isDemo || BYPASS_PROTECTION ? GAME_PART.INTRODUCTION : GAME_PART.PROTECTION;
+  next_part = BYPASS_PROTECTION ? GAME_PART.INTRODUCTION : GAME_PART.PROTECTION;
   sound.player?.stopMusic();
 }
 
@@ -793,59 +741,6 @@ export function change_part(num, pos = 0) {
   current_part = next_part;
   next_part = 0;
 }
-
-// const restartPos: any = [
-// 	[16008,  0],
-//   [16001,  0],
-//   [16002, 10],
-//   [16002, 12],
-//   [16002, 14],
-// 	[16003, 20],
-//   [16003, 24],
-//   [16003, 26],
-//   [16004, 30],
-//   [16004, 31],
-// 	[16004, 32],
-//   [16004, 33],
-//   [16004, 34],
-//   [16004, 35],
-//   [16004, 36],
-// 	[16004, 37],
-//   [16004, 38],
-//   [16004, 39],
-//   [16004, 40],
-//   [16004, 41],
-// 	[16004, 42],
-//   [16004, 43],
-//   [16004, 44],
-//   [16004, 45],
-//   [16004, 46],
-// 	[16004, 47],
-//   [16004, 48],
-//   [16004, 49],
-//   [16006, 64],
-//   [16006, 65],
-// 	[16006, 66],
-//   [16006, 67],
-//   [16006, 68],
-//   [16005, 50],
-//   [16006, 60],
-// 	[16007, 0]
-// ];
-
-// export function next() {
-//   const part = current_part + 1;
-//   if (part in partsList) {
-//     change_part(part);
-//   }
-// }
-
-// export function prev() {
-//   const part = current_part - 1;
-//   if (part in partsList) {
-//     change_part(part);
-//   }
-// }
 
 export function set_language(num) {
   strings_language = num;

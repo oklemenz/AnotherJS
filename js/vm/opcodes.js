@@ -14,14 +14,14 @@ export const OP_CODE = {
   /* 0x08 */
   setSetVect: 0x08,
   jnz: 0x09,
-  condJmp: 0x0A,
-  setPalette: 0x0B,
+  condJmp: 0x0a,
+  setPalette: 0x0b,
 
   /* 0x0C */
-  resetThread: 0x0C,
-  selectVideoPage: 0x0D,
-  fillVideoPage: 0x0E,
-  copyVideoPage: 0x0F,
+  resetThread: 0x0c,
+  selectVideoPage: 0x0d,
+  fillVideoPage: 0x0e,
+  copyVideoPage: 0x0f,
 
   /* 0x10 */
   blitFramebuffer: 0x10,
@@ -38,8 +38,8 @@ export const OP_CODE = {
   /* 0x18 */
   playSound: 0x18,
   updateMemList: 0x19,
-  playMusic: 0x1A,
-}
+  playMusic: 0x1a
+};
 
 export const DRAW_POLY_BACKGROUND = 0x80;
 export const DRAW_POLY_SPRITE = 0x40;

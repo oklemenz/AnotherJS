@@ -18,8 +18,8 @@ export const VAR = {
   HACK_VAR_BC: 0xbc,
   HACK_VAR_F2: 0xf2,
   HACK_VAR_C6: 0xc6,
-  HACK_VAR_E4: 0xe4,
-}
+  HACK_VAR_E4: 0xe4
+};
 
 export const vmVars = new Array(256);
 export const vmTasks = new Array(64);

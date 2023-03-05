@@ -9,8 +9,8 @@ export const KEY_CODE = {
   LEFT: 4,
   ACTION: 5,
   JUMP: 6,
-  FF: 7,
-}
+  FF: 7
+};
 
 let gamepadState = new Array(6);
 let keyboardState = new Array(6);
@@ -39,8 +39,7 @@ export function pollGamepads() {
     gamepadState[KEY_CODE.JUMP] = buttonPressed(gamepad.buttons[1]);
     gamepadState[KEY_CODE.ACTION] = buttonPressed(gamepad.buttons[0]);
 
-    gamepadState[KEY_CODE.FF] =
-      buttonPressed(gamepad.buttons[5]) || buttonPressed(gamepad.buttons[7]);
+    gamepadState[KEY_CODE.FF] = buttonPressed(gamepad.buttons[5]) || buttonPressed(gamepad.buttons[7]);
   }
 }
 
@@ -56,12 +55,10 @@ const controls = {
   ArrowDown: KEY_CODE.DOWN,
   ArrowLeft: KEY_CODE.LEFT,
   ArrowRight: KEY_CODE.RIGHT,
-  f: KEY_CODE.FF,
+  f: KEY_CODE.FF
 };
 
 function set_key_pressed(e, state) {
-  console.log(e.key);
-
   if (e.key in controls) {
     e.preventDefault();
     const code = controls[e.key];
@@ -83,15 +80,15 @@ function setState(state) {
   }
   let width = window.canvas.width;
   let height = window.canvas.height;
-  if (mousePos.x >= 0 && mousePos.x <= (1/3) * width && mousePos.y >= 0 && mousePos.y <= height) {
+  if (mousePos.x >= 0 && mousePos.x <= (1 / 3) * width && mousePos.y >= 0 && mousePos.y <= height) {
     let _faceRight = faceRight;
     faceRight = false;
-    if (mousePos.x <= (1/6) * width) {
+    if (mousePos.x <= (1 / 6) * width) {
       setAction(true);
     } else {
       setAction(false);
     }
-    if (mousePos.y <= (1/3) * height) {
+    if (mousePos.y <= (1 / 3) * height) {
       if (_faceRight === true) {
         setLeft(true);
         return;
@@ -102,15 +99,15 @@ function setState(state) {
       return;
     }
   }
-  if (mousePos.x >= (2/3) * width && mousePos.x <= width && mousePos.y >= 0 && mousePos.y <= height) {
+  if (mousePos.x >= (2 / 3) * width && mousePos.x <= width && mousePos.y >= 0 && mousePos.y <= height) {
     let _faceRight = faceRight;
     faceRight = true;
-    if (mousePos.x >= (5/6) * width) {
+    if (mousePos.x >= (5 / 6) * width) {
       setAction(true);
     } else {
       setAction(false);
     }
-    if (mousePos.y <= (1/3) * height) {
+    if (mousePos.y <= (1 / 3) * height) {
       if (_faceRight === false) {
         setRight(true);
         return;
@@ -121,13 +118,18 @@ function setState(state) {
       return;
     }
   }
-  if (mousePos.x >= 0 && mousePos.x <= width && mousePos.y >= 0 && mousePos.y <= (1/3) * height) {
+  if (mousePos.x >= 0 && mousePos.x <= width && mousePos.y >= 0 && mousePos.y <= (1 / 3) * height) {
     setUp(true);
   }
-  if (mousePos.x >= 0 && mousePos.x <= width && mousePos.y >= (2/3) * height && mousePos.y <= height) {
+  if (mousePos.x >= 0 && mousePos.x <= width && mousePos.y >= (2 / 3) * height && mousePos.y <= height) {
     setDown(true);
   }
-  if (mousePos.x >= 0.5 * width / 3 && mousePos.x <= 2.5 * width / 3 && mousePos.y >= 0.5 * height / 3 && mousePos.y <= 2.5 * height / 3) {
+  if (
+    mousePos.x >= (0.5 * width) / 3 &&
+    mousePos.x <= (2.5 * width) / 3 &&
+    mousePos.y >= (0.5 * height) / 3 &&
+    mousePos.y <= (2.5 * height) / 3
+  ) {
     setAction(true);
   }
 }
@@ -173,21 +175,21 @@ export function bind_events() {
     mousePos = p;
     touchCount = c;
     setState(true);
-  }
+  };
   window.onRelease = (p, c) => {
     touchCount = c;
     if (touchCount === 0) {
       setState(false);
       mousePos = null;
     }
-  }
+  };
   window.onMove = (p, c) => {
     touchCount = c;
     if (mousePos) {
       mousePos = p;
       setState(true);
     }
-  }
+  };
 }
 
 export function update_input() {
@@ -207,17 +209,18 @@ export function update_input() {
   }
 
   if (is_key_pressed(KEY_CODE.DOWN)) {
-    memory.vmVars[VAR.HERO_POS_UP_DOWN] = 1;
     memory.vmVars[VAR.HERO_POS_JUMP_DOWN] = 1;
+    memory.vmVars[VAR.HERO_POS_UP_DOWN] = 1;
     mask |= 4;
   } else if (is_key_pressed(KEY_CODE.UP)) {
-    memory.vmVars[VAR.HERO_POS_UP_DOWN] = -1;
     memory.vmVars[VAR.HERO_POS_JUMP_DOWN] = -1;
+    memory.vmVars[VAR.HERO_POS_UP_DOWN] = -1;
     mask |= 8;
   }
 
   if (is_key_pressed(KEY_CODE.JUMP)) {
     memory.vmVars[VAR.HERO_POS_JUMP_DOWN] = -1;
+    memory.vmVars[VAR.HERO_POS_UP_DOWN] = 0;
     mask |= 8;
   }
 

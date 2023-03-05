@@ -4,7 +4,7 @@ const CreateRawChannel = () => {
     playing: false,
     sample: null,
     speed: 0,
-    loops: 0,
+    loops: 0
   };
 };
 
@@ -23,10 +23,7 @@ class SfxRawProcessor extends AudioWorkletProcessor {
   handleMessage(event) {
     switch (event.data.message) {
       case "init":
-        console.log(
-          "[soundProcessor] setting mixingRate to",
-          event.data.mixingRate
-        );
+        console.log("[soundProcessor] setting mixingRate to", event.data.mixingRate);
         this._ready = true;
         this._mixingRate = event.data.mixingRate;
         break;
@@ -46,7 +43,9 @@ class SfxRawProcessor extends AudioWorkletProcessor {
       }
 
       case "pause": {
-        if (this._playing) this.pause();
+        if (this._playing) {
+          this.pause();
+        }
 
         break;
       }
@@ -86,13 +85,15 @@ class SfxRawProcessor extends AudioWorkletProcessor {
       for (let i = 0; i < this._channels.length; ++i) {
         const chan = this._channels[i];
         if (chan.playing) {
-          const sample =
-            (chan.sample[Math.floor(chan.pos)] * chan.volume) / 63.0;
+          const sample = (chan.sample[Math.floor(chan.pos)] * chan.volume) / 63.0;
           out[0][j] += sample / 128.0;
           chan.pos += chan.speed;
           if (chan.pos > chan.sample.length - 1) {
-            if (chan.loops === -1) chan.pos = chan.sample.length - chan.pos;
-            else chan.playing = false;
+            if (chan.loops === -1) {
+              chan.pos = chan.sample.length - chan.pos;
+            } else {
+              chan.playing = false;
+            }
           }
         }
       }
@@ -142,7 +143,7 @@ function nr(inp, len, out) {
     inOffset++;
     out[outOffset] = sL + prevL;
     if (out[outOffset] > 128 || out[outOffset] < -127) {
-      debugger;
+      throw new Error("expected error");
     }
     outOffset++;
     prevL = sL;
@@ -160,7 +161,7 @@ const CreateChannel = () => ({
   sampleLoopPos: 0,
   sampleLoopLen: 0,
   volume: 0,
-  pos: new Frac(),
+  pos: new Frac()
 });
 
 const CreateSfxPattern = () => ({
@@ -171,7 +172,7 @@ const CreateSfxPattern = () => ({
   sampleLen: 0,
   loopPos: 0,
   loopLen: 0,
-  sampleVolume: 0,
+  sampleVolume: 0
 });
 
 const F32Max = (input) => {
@@ -201,10 +202,7 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
   handleMessage(event) {
     switch (event.data.message) {
       case "init":
-        console.log(
-          "[soundProcessor] setting mixingRate to",
-          event.data.mixingRate
-        );
+        console.log("[soundProcessor] setting mixingRate to", event.data.mixingRate);
         this._ready = true;
         break;
 
@@ -235,7 +233,9 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
       }
 
       case "pause": {
-        if (this._playing) this.pause();
+        if (this._playing) {
+          this.pause();
+        }
 
         break;
       }
@@ -302,9 +302,7 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
 
   mixSamples(buf, len) {
     buf.fill(0, 0, len * 2);
-    const samplesPerTick = Math.floor(
-      this._rate / Math.floor(1000 / this._delay)
-    );
+    const samplesPerTick = Math.floor(this._rate / Math.floor(1000 / this._delay));
     let offset = 0;
     while (len !== 0) {
       if (this._samplesLeft === 0) {
@@ -347,10 +345,7 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
         return s;
       }
     }
-    let sample = ch.pos.interpolate(
-      (ch.sampleData[pos1] << 24) >> 24,
-      (ch.sampleData[pos2] << 24) >> 24
-    );
+    let sample = ch.pos.interpolate((ch.sampleData[pos1] << 24) >> 24, (ch.sampleData[pos2] << 24) >> 24);
     sample = s + (((sample * ch.volume) / 64) >> 0);
     if (sample < -128) {
       sample = -128;
@@ -363,8 +358,7 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
 
   handleEvents() {
     let order = this._sfxMod.orderTable[this._sfxMod.curOrder];
-    let offset =
-      this._sfxMod.data.byteOffset + this._sfxMod.curPos + order * 1024;
+    let offset = this._sfxMod.data.byteOffset + this._sfxMod.curPos + order * 1024;
     for (let ch = 0; ch < 4; ++ch) {
       this.handlePattern(ch, new DataView(this._sfxMod.data.buffer, offset));
       offset += 4;
@@ -397,10 +391,8 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
           pat.sampleVolume = this._sfxMod.samples[sample - 1].volume;
           pat.sampleStart = 8;
           pat.sampleBuffer = ptr;
-          pat.sampleLen =
-            new DataView(ptr.buffer, ptr.byteOffset).getUint16(0) * 2;
-          const loopLen =
-            new DataView(ptr.buffer, ptr.byteOffset).getUint16(2) * 2;
+          pat.sampleLen = new DataView(ptr.buffer, ptr.byteOffset).getUint16(0) * 2;
+          const loopLen = new DataView(ptr.buffer, ptr.byteOffset).getUint16(2) * 2;
           if (loopLen !== 0) {
             pat.loopPos = pat.sampleLen;
             pat.loopLen = loopLen;
@@ -440,7 +432,7 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
       this.postMessage({
         message: "syncVar",
         variable: 0xf4,
-        value: pat.note_2,
+        value: pat.note_2
       });
     } else if (pat.note_1 !== 0) {
       if (pat.note_1 === 0xfffe) {
@@ -448,20 +440,13 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
         this._channels[channel].sampleLen = 0;
       } else if (pat.sampleBuffer !== null) {
         if (pat.note_1 < 0x37 || pat.note_1 >= 0x1000) {
-          console.error(
-            `Assertion failed: ${pat.note_1.toString(
-              16
-            )} >= 0x37 && ${pat.note_1.toString(16)} < 0x1000`
-          );
+          console.error(`Assertion failed: ${pat.note_1.toString(16)} >= 0x37 && ${pat.note_1.toString(16)} < 0x1000`);
         }
         // convert amiga period value to hz
         const freq = Math.floor(7159092 / (pat.note_1 * 2));
         // console.log(`SfxPlayer::handlePattern() adding sample freq = 0x${freq.toString(16)}`)
         const ch = this._channels[channel];
-        ch.sampleData = new Uint8Array(
-          pat.sampleBuffer.buffer,
-          pat.sampleBuffer.byteOffset + pat.sampleStart
-        );
+        ch.sampleData = new Uint8Array(pat.sampleBuffer.buffer, pat.sampleBuffer.byteOffset + pat.sampleStart);
         ch.sampleLen = pat.sampleLen;
         ch.sampleLoopPos = pat.loopPos;
         ch.sampleLoopLen = pat.loopLen;
@@ -477,7 +462,6 @@ class SfxPlayerProcessor extends AudioWorkletProcessor {
       }
     } else {
       // console.log('else 2')
-      // debugger
     }
   }
 

@@ -41,19 +41,30 @@ Another World reimplementation written in HTML5 / JavaScript
 
 Url parameters are leveraged to save game state automatically (shortcut in brackets)
 
-- `part (p)`: Current part (0-8, default: 1)
+- `part (p)`: Current game part (0-8, default: 1)
+- `pos (o)`: Current game part position (see below, default: 0)
 
-### Parts
+### Game Parts
 
 - 0: [Copy Protection](https://anotherjs.oklemenz.de?part=0)
 - 1: [Introduction](https://anotherjs.oklemenz.de?part=1)
 - 2: [Water](https://anotherjs.oklemenz.de?part=2)
 - 3: [Jail](https://anotherjs.oklemenz.de?part=3)
-- 4: [Caves](https://anotherjs.oklemenz.de?part=4)
+  - 3.1: [Jail - Intro](https://anotherjs.oklemenz.de?part=3&pos=20)
+  - 3.2: [Jail - Cage](https://anotherjs.oklemenz.de?part=3&pos=24)
+- 4: [City](https://anotherjs.oklemenz.de?part=4)
+  - 4.1: [City - Tunnel](https://anotherjs.oklemenz.de?part=4&pos=30)
+  - 4.2: [City - Charge](https://anotherjs.oklemenz.de?part=4&pos=31)
+  - 4.3: [City - Caves](https://anotherjs.oklemenz.de?part=4&pos=33)
+  - 4.4: [City - Pool](https://anotherjs.oklemenz.de?part=4&pos=35)
+  - 4.5: [City - T-Rock](https://anotherjs.oklemenz.de?part=4&pos=37)
+  - 4.6: [City - Columns](https://anotherjs.oklemenz.de?part=4&pos=39)
+  - 4.7: [City - Dive](https://anotherjs.oklemenz.de?part=4&pos=41)
+  - 4.8: [City - Exit](https://anotherjs.oklemenz.de?part=4&pos=49)
 - 5: [Arena](https://anotherjs.oklemenz.de?part=5)
-- 6: [Luxe](https://anotherjs.oklemenz.de?part=6)
+- 6: [Baths](https://anotherjs.oklemenz.de?part=6)
 - 7: [Final](https://anotherjs.oklemenz.de?part=7)
-- 8: [Password screen](https://anotherjs.oklemenz.de?part=8)
+- 8: [Password](https://anotherjs.oklemenz.de?part=8)
 
 ## Credits
 
